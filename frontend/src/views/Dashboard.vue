@@ -118,8 +118,8 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
 import * as echarts from 'echarts'
-import type { DashboardStats, BudgetWithUsage, MonthlySummary } from '@/types'
-import { getDashboardStats } from '@/api/stats'
+import type { DashboardStats, BudgetWithUsage } from '@/types'
+import { getDashboardStats, getMonthlySummary } from '@/api/stats'
 import { getDashboardBudgets } from '@/api/budget'
 
 const trendChartRef = ref<HTMLElement>()
@@ -153,6 +153,56 @@ const loadData = async () => {
   }
 }
 
+const loadTrendData = async () => {
+  try {
+    const data = await getMonthlySummary()
+    
+    const months = data.map(d => d.month)
+    const incomes = data.map(d => d.income)
+    const expenses = data.map(d => d.expense)
+
+    if (trendChart) {
+      trendChart.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['收入', '支出'] },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        xAxis: { type: 'category', boundaryGap: false, data: months },
+        yAxis: { type: 'value' },
+        series: [
+          {
+            name: '收入',
+            type: 'line',
+            smooth: true,
+            data: incomes,
+            itemStyle: { color: '#67c23a' },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(103, 194, 58, 0.3)' },
+                { offset: 1, color: 'rgba(103, 194, 58, 0.05)' }
+              ])
+            }
+          },
+          {
+            name: '支出',
+            type: 'line',
+            smooth: true,
+            data: expenses,
+            itemStyle: { color: '#f56c6c' },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(245, 108, 108, 0.3)' },
+                { offset: 1, color: 'rgba(245, 108, 108, 0.05)' }
+              ])
+            }
+          }
+        ]
+      })
+    }
+  } catch (error) {
+    console.error('Failed to load trend data:', error)
+  }
+}
+
 const initTrendChart = async () => {
   if (!trendChartRef.value) return
   
@@ -172,7 +222,7 @@ const initTrendChart = async () => {
       trigger: 'axis'
     },
     legend: {
-      data: ['收入', '支出', '结余']
+      data: ['收入', '支出']
     },
     grid: {
       left: '3%',
@@ -219,6 +269,7 @@ const initTrendChart = async () => {
   }
   
   trendChart.setOption(option)
+  loadTrendData()
 }
 
 onMounted(() => {

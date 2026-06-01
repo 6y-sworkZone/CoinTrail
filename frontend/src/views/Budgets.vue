@@ -96,8 +96,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, type FormInstance, type FormRules } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, reactive, onMounted } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import dayjs from 'dayjs'
 import type { BudgetWithUsage, Category } from '@/types'
 import { getBudgets, createBudget, updateBudget, deleteBudget, type CreateBudgetData } from '@/api/budget'

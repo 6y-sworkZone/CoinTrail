@@ -139,10 +139,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, type FormInstance, type FormRules } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import dayjs from 'dayjs'
-import type { Transaction, Account, Category, TransactionType } from '@/types'
+import type { Transaction, Account, Category, TransactionType, CategoryType } from '@/types'
 import { getTransactions, createTransaction, updateTransaction, deleteTransaction, batchDeleteTransactions, type CreateTransactionData } from '@/api/transaction'
 import { getAccounts } from '@/api/account'
 import { getCategories } from '@/api/category'

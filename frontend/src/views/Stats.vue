@@ -87,10 +87,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick, watch } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
-import type { MonthlySummary, CategorySummary } from '@/types'
+import type { CategorySummary } from '@/types'
 import { getMonthlySummary, getCategorySummary } from '@/api/stats'
 
 const trendChartRef = ref<HTMLElement>()

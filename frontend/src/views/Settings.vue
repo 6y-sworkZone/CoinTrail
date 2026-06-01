@@ -85,8 +85,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, type FormInstance, type FormRules, type UploadRequestOptions } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, reactive } from 'vue'
+import { ElMessage, type FormInstance, type FormRules, type UploadRequestOptions } from 'element-plus'
 import { changePassword, type ChangePasswordData } from '@/api/auth'
 import { exportTransactions, importTransactions } from '@/api/importExport'
 
@@ -105,7 +105,7 @@ const passwordForm = reactive<ChangePasswordData & { confirm_password: string }>
   confirm_password: ''
 })
 
-const validateConfirmPassword = (rule: any, value: string, callback: any) => {
+const validateConfirmPassword = (_rule: any, value: string, callback: any) => {
   if (value !== passwordForm.new_password) {
     callback(new Error('两次输入的新密码不一致'))
   } else {

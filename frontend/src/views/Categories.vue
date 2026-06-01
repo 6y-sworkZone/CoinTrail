@@ -59,8 +59,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, type FormInstance, type FormRules } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, reactive, onMounted } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import type { Category, CategoryType } from '@/types'
 import { getCategories, createCategory, updateCategory, deleteCategory, type CreateCategoryData } from '@/api/category'
 
